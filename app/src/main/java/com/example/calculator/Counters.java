@@ -6,24 +6,26 @@ import android.os.Parcelable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Counters implements Parcelable {
     private String counter1;
     private String counter2;
     private String counter3;
+    private String counter4;
 
     public Counters() {
         counter1 = "";
         counter2 = "";
         counter3 = "";
+        counter4 = "";
     }
 
     protected Counters(Parcel in) {
         counter1 = in.readString();
         counter2 = in.readString();
         counter3 = in.readString();
+        counter4 = in.readString();
     }
 
     @Override
@@ -31,6 +33,7 @@ public class Counters implements Parcelable {
         dest.writeString(counter1);
         dest.writeString(counter2);
         dest.writeString(counter3);
+        dest.writeString(counter4);
     }
 
     @Override
@@ -124,9 +127,14 @@ public class Counters implements Parcelable {
         LexemeBuffer lexemeBuffer = new LexemeBuffer(lexemes);
 
         double result = expr(lexemeBuffer);
-        BigDecimal decimal = new BigDecimal(result);
-        result = Double.parseDouble(String.valueOf(decimal.setScale(4, BigDecimal.ROUND_HALF_DOWN)));
-        setCounter3(new DecimalFormat("#.####").format(result));
+        if (getCounter4().equals("♾")) {
+            setCounter3(getCounter4());
+            setCounter4("");
+        } else {
+            BigDecimal decimal = new BigDecimal(result);
+            result = Double.parseDouble(String.valueOf(decimal.setScale(4, BigDecimal.ROUND_HALF_DOWN)));
+            setCounter3(new DecimalFormat("#.####").format(result));
+        }
     }
 
     public String getCounter3() {
@@ -135,6 +143,14 @@ public class Counters implements Parcelable {
 
     public void setCounter3(String counter3) {
         this.counter3 = "=" + counter3;
+    }
+
+    public String getCounter4() {
+        return counter4;
+    }
+
+    public void setCounter4(String counter4) {
+        this.counter4 = counter4;
     }
 
     public String brackets(String expText) {
@@ -230,6 +246,9 @@ public class Counters implements Parcelable {
 
     public Double plusMinus(LexemeBuffer lexemes) {
         double value = multiDiv(lexemes);
+        if (getCounter4().equals("♾")) {
+            return value;
+        }
         while (true) {
             Lexeme lexeme = lexemes.next();
             switch (lexeme.type) {
@@ -255,8 +274,13 @@ public class Counters implements Parcelable {
                     value *= factor(lexemes);
                     break;
                 case OP_DIV:
-                    value /= factor(lexemes);
-                    break;
+                    double vel = factor(lexemes);
+                    if (vel != 0) {
+                        value /= vel;
+                        break;
+                    } else {
+                        setCounter4("♾");
+                    }
                 default:
                     lexemes.back();
                     return value;
