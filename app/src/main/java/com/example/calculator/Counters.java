@@ -125,7 +125,6 @@ public class Counters implements Parcelable {
     private void sum(String _counter2) {
         List<Lexeme> lexemes = lexAnalyze(brackets(_counter2));
         LexemeBuffer lexemeBuffer = new LexemeBuffer(lexemes);
-
         double result = expr(lexemeBuffer);
         if (getCounter4().equals("♾")) {
             setCounter3(getCounter4());
@@ -295,11 +294,7 @@ public class Counters implements Parcelable {
                 return Double.valueOf(lexeme.value);
             case LEFT_BRACKET:
                 Double value = expr(lexemes);
-                lexeme = lexemes.next();
-                if (lexeme.type != LexemeType.RIGHT_BRACKET) {
-                    throw new RuntimeException("Unexpected token: " + lexeme.value
-                            + " at position: " + lexemes.getPos());
-                }
+                lexemes.next();
                 return value;
             default:
                 throw new RuntimeException("Unexpected token: " + lexeme.value
