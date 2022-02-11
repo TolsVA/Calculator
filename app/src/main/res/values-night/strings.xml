@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Calculator</string>
     <string name="key_1">1</string>
@@ -21,8 +22,6 @@
     <string name="key_del">AC</string>
     <string name="key_div">÷</string>
     <string name="key_back">⌫</string>
-
-
 
     <string name="item1">item1</string>
     <string name="item2">item2</string>

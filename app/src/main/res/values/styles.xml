@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CalKey" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:textSize">@dimen/textSize</item>
+        <item name="android:layout_marginBottom">@dimen/margin_bottom</item>
+        <item name="android:layout_marginStart">@dimen/margin_start</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+    </style>
+
+    <style name="CalKey.Bottom">
+        <item name="android:layout_marginBottom">@dimen/margin_zero</item>
+    </style>
+
+    <style name="CalKey.Start">
+        <item name="android:layout_marginStart">@dimen/margin_zero</item>
+    </style>
+</resources>

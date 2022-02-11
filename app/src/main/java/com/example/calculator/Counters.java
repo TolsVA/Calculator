@@ -128,6 +128,7 @@ public class Counters implements Parcelable {
         double result = expr(lexemeBuffer);
         if (getCounter4().equals("♾")) {
             setCounter3(getCounter4());
+
             setCounter4("");
         } else {
             BigDecimal decimal = new BigDecimal(result);

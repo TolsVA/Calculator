@@ -1,12 +1,22 @@
 package com.example.calculator;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.style.BackgroundColorSpan;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.HashMap;
 
@@ -24,15 +34,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private final static String keyCounters = "Counters";
 
+    Boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setTitle("Yannis");
+
+
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         counters = new Counters();
         initView();
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.item1:
+                makeToast("это «Вы нажали кнопку« item1 »!»");
+                return true;
+            case R.id.item2:
+                makeToast("это «Вы нажали кнопку« item2 »!»");
+                return true;
+            case R.id.item3:
+                makeToast("это «Вы нажали кнопку« item3 »!»");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     //Сохранение данных
     @Override
@@ -107,7 +161,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.key_left_bracket).setOnClickListener(bracketClickListener);
         findViewById(R.id.key_right_bracket).setOnClickListener(bracketClickListener);
 
+        findViewById(R.id.key_menu).setOnClickListener(menuClickListener);
+
+//        Button keyRightBracket = (Button) findViewById(R.id.key_right_bracket);
+//        keyRightBracket.setEnabled(false);
+//        ((Button) findViewById(R.id.key_menu)).setCompoundDrawablesWithIntrinsicBounds(
+//                AppCompatResources.getDrawable(this, R.drawable.ic_baseline_brightness_3_24), null, null, null);
+
     }
+
+    final View.OnClickListener menuClickListener = new View.OnClickListener() {
+        @SuppressLint({"NewApi", "UseCompatLoadingForDrawables"})
+        @Override
+        public void onClick(View v) {
+            MaterialButton menu = findViewById(R.id.key_menu);
+            Drawable imageView1 = getResources().getDrawable(R.drawable.ic_baseline_wb_sunny_24);
+            Drawable imageView2 = getResources().getDrawable(R.drawable.ic_baseline_brightness_3_24);
+            Drawable imageView3 = getResources().getDrawable(R.color.black);
+ //           menu.setIcon(imageView1);
+
+
+            ActionBar actionBar = getSupportActionBar();
+            assert actionBar != null;
+            if (flag) {
+                actionBar.show(); // показать меню
+                setTitle("Кака");
+                actionBar.setBackgroundDrawable(imageView3);
+                menu.setText("No ActionBar");
+
+                flag = false;
+            } else {
+                actionBar.hide(); // скрыть меню
+                menu.setText("Dark ActionBar");
+                flag = true;
+            }
+        }
+    };
 
     View.OnClickListener digitClickListener = new View.OnClickListener() {
         @Override
@@ -186,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void backParenthesis(String symbol) {
+
         if (counters.getCounter2().equals("") && symbol.equals("(")) {
             counters.setCounter2(symbol);
             setTextCounter(textCounter2, counters.getCounter2());
@@ -221,8 +311,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (symbol.equals(")")) {
                 if (l > r) {
                     counters.setCounter2(symbol);
-                } else {
-                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
+//                } else {
+//                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
                 }
             }
         }
@@ -239,8 +329,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (symbol.equals(")")) {
                 if (l > r) {
                     counters.setCounter2(symbol);
-                } else {
-                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
+//                } else {
+//                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
                 }
             }
         }
@@ -255,8 +345,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (l > r) {
                     counters.setCounter2("bk");
                     counters.setCounter2(symbol);
-                } else {
-                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
+//                } else {
+//                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
                 }
             }
         }

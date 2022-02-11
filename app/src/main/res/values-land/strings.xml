@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Calculator</string>
     <string name="key_1">1</string>
@@ -11,7 +12,7 @@
     <string name="key_9">9</string>
     <string name="key_0">0</string>
     <string name="key_dot">,</string>
-    <string name="key_menu">No ActionBar</string>
+
     <string name="key_equals">=</string>
     <string name="key_plus">+</string>
     <string name="key_minus">-</string>
