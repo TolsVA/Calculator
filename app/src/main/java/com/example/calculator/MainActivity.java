@@ -2,29 +2,30 @@ package com.example.calculator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.style.BackgroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
 import java.util.HashMap;
+import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private Counters counters;
 
-    private TextView textCounter1; // История
+    protected TextView textCounter1; // История
     private TextView textCounter2; // События
     private TextView textCounter3; // Результат
 
@@ -40,25 +41,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle("Yannis");
-
-
         setContentView(R.layout.activity_main);
-
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         counters = new Counters();
         initView();
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,16 +59,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                setTitle(getString(R.string.app_name));
+//                finish();
                 return true;
-            case R.id.item1:
-                makeToast("это «Вы нажали кнопку« item1 »!»");
+            case R.id.clear_history:
+                counters.counter1 = "";
+                setTextCounter(textCounter1, counters.getCounter1());
                 return true;
-            case R.id.item2:
-                makeToast("это «Вы нажали кнопку« item2 »!»");
+            case R.id.cal_key_style:
+                // сохраним настройки
+                setAppTheme(CalKeyCodeStyle);
+                nameStyle = getResources().getString(R.string.cal_key_style);
+                setTitle(getResources().getString(R.string.cal_key_style));
+                // пересоздадим активити, чтобы тема применилась
+                recreate();
                 return true;
-            case R.id.item3:
-                makeToast("это «Вы нажали кнопку« item3 »!»");
+            case R.id.my_cool_style:
+                setAppTheme(MyCoolCodeStyle);
+                nameStyle = getResources().getString(R.string.my_cool_style);
+                setTitle(getResources().getString(R.string.my_cool_style));
+                recreate();
+                return true;
+            case R.id.material_light:
+                setAppTheme(AppThemeLightCodeStyle);
+                nameStyle = getResources().getString(R.string.material_light);
+                setTitle(getResources().getString(R.string.material_light));
+                recreate();
+                return true;
+            case R.id.material_dark:
+                setAppTheme(AppThemeDarkCodeStyle);
+                nameStyle = getResources().getString(R.string.material_dark);
+                setTitle(getResources().getString(R.string.material_dark));
+                recreate();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -162,37 +171,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.key_right_bracket).setOnClickListener(bracketClickListener);
 
         findViewById(R.id.key_menu).setOnClickListener(menuClickListener);
-
-//        Button keyRightBracket = (Button) findViewById(R.id.key_right_bracket);
-//        keyRightBracket.setEnabled(false);
-//        ((Button) findViewById(R.id.key_menu)).setCompoundDrawablesWithIntrinsicBounds(
-//                AppCompatResources.getDrawable(this, R.drawable.ic_baseline_brightness_3_24), null, null, null);
-
     }
+
 
     final View.OnClickListener menuClickListener = new View.OnClickListener() {
         @SuppressLint({"NewApi", "UseCompatLoadingForDrawables"})
         @Override
         public void onClick(View v) {
             MaterialButton menu = findViewById(R.id.key_menu);
-            Drawable imageView1 = getResources().getDrawable(R.drawable.ic_baseline_wb_sunny_24);
-            Drawable imageView2 = getResources().getDrawable(R.drawable.ic_baseline_brightness_3_24);
-            Drawable imageView3 = getResources().getDrawable(R.color.black);
- //           menu.setIcon(imageView1);
+//            MaterialButton menu1 = findViewById(R.id.key_1);
+//            MaterialButton menu2 = findViewById(R.id.key_2);
+////            Drawable imageView1 = getResources().getDrawable(R.drawable.ic_baseline_wb_sunny_24);
+//            Drawable imageView2 = getResources().getDrawable(R.drawable.ic_baseline_repeat_one_24);
+////            Drawable imageView3 = getResources().getDrawable(R.color.black);
+////
+//            menu.setIcon(imageView2);
+//            menu.setBackground(getResources().getDrawable(R.color.black));
+//            menu1.setBackground(getResources().getDrawable(R.color.black));
+//            menu2.setBackground(getResources().getDrawable(R.color.black));
+//            menu.setIconTint(ColorStateList.valueOf(getResources().getColor(R.color.sun)));
+//            menu.setIconSize(50);
+//            ConstraintLayout kk = findViewById(R.id.mainContainer);
+//
+//            MenuItem item = findViewById(R.id.cal_key_style);
 
 
+
+            String string = getResources().getString(R.string.key_menu);
             ActionBar actionBar = getSupportActionBar();
             assert actionBar != null;
             if (flag) {
                 actionBar.show(); // показать меню
-                setTitle("Кака");
-                actionBar.setBackgroundDrawable(imageView3);
-                menu.setText("No ActionBar");
+                if (nameStyle.equals("nameStyle")) {
+                    setTitle(getString(R.string.app_name));
+                } else {
+                    setTitle(nameStyle);
+                }
+                menu.setText(string);
 
                 flag = false;
             } else {
                 actionBar.hide(); // скрыть меню
-                menu.setText("Dark ActionBar");
+                if (Locale.getDefault().getLanguage().equals("ru")) {
+                    menu.setText(getResources().getString(R.string.key_menu2));
+                } else if (Locale.getDefault().getLanguage().equals("en")) {
+                    menu.setText(getResources().getString(R.string.key_menu2));
+                } else {
+                    menu.setText("ыыыыы ыыы ыыыыыы");
+                }
                 flag = true;
             }
         }
@@ -266,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setTextCounter(textCounter1, counters.getCounter1());
             setTextCounter(textCounter2, counters.getCounter2());
             setTextCounter(textCounter3, counters.getCounter3());
+
         } else {
             if (!symbol.equals(",") || counters.getCounter2().charAt(counters.getCounter2().length() - 1) != ')') {
                 counters.setCounter2(symbol);
@@ -311,8 +338,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (symbol.equals(")")) {
                 if (l > r) {
                     counters.setCounter2(symbol);
-//                } else {
-//                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
                 }
             }
         }
@@ -329,8 +354,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (symbol.equals(")")) {
                 if (l > r) {
                     counters.setCounter2(symbol);
-//                } else {
-//                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
                 }
             }
         }
@@ -345,8 +368,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (l > r) {
                     counters.setCounter2("bk");
                     counters.setCounter2(symbol);
-//                } else {
-//                    makeToast("\"ВСЕ СКОБКИ ЗАКРЫТЫ\"");
                 }
             }
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Calculator</string>
+    <string name="app_name">Калькулятор</string>
     <string name="key_1">1</string>
     <string name="key_2">2</string>
     <string name="key_3">3</string>
@@ -12,7 +12,8 @@
     <string name="key_9">9</string>
     <string name="key_0">0</string>
     <string name="key_dot">,</string>
-    <string name="key_menu">No ActionBar</string>
+    <string name="key_menu">Скрыть панель навигации</string>
+    <string name="key_menu2">Панель навигации</string>
     <string name="key_equals">=</string>
     <string name="key_plus">+</string>
     <string name="key_minus">-</string>
@@ -22,9 +23,9 @@
     <string name="key_del">AC</string>
     <string name="key_div">÷</string>
     <string name="key_back">⌫</string>
-
-    <string name="item1">item1</string>
-    <string name="item2">item2</string>
-    <string name="item3">item3</string>
-    <string name="item4">item4</string>
+    <string name="cal_key_style"><i>\"Светлая тема.\"</i></string>
+    <string name="my_cool_style"><u>"Синяя тема"</u></string>
+    <string name="material_light"><b>Красная тема</b></string>
+    <string name="material_dark"><i><b><u>Тёмная</u></b></i> <i><u>тема</u></i></string>
+    <string name="clear_history">Очистить историю.</string>
 </resources>
