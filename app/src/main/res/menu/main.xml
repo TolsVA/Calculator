@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/material_light"
+        android:title="@string/material_light"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/cal_key_style"
+        android:icon="@drawable/ic_baseline_wb_sunny_24"
+        android:title="@string/cal_key_style"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/my_cool_style"
+        android:title="@string/my_cool_style"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/material_dark"
+        android:icon="@drawable/ic_baseline_brightness_3_24"
+        android:title="@string/material_dark"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/clear_history"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/clear_history"
+        app:showAsAction="always">
+    </item>
+</menu>

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Counters implements Parcelable {
-    private String counter1;
+    protected String counter1;
     private String counter2;
     private String counter3;
     private String counter4;
@@ -64,7 +64,11 @@ public class Counters implements Parcelable {
             expText = expText.substring(1, expText.length() - 1);
         }
 
-        this.counter1 += "\n" + expText + this.counter3;
+        if (this.counter1.equals("")) {
+            this.counter1 += expText + this.counter3;
+        } else {
+            this.counter1 += "\n" + expText + this.counter3;
+        }
         this.counter2 = getCounter3().substring(1);
     }
 
@@ -128,6 +132,7 @@ public class Counters implements Parcelable {
         double result = expr(lexemeBuffer);
         if (getCounter4().equals("♾")) {
             setCounter3(getCounter4());
+
             setCounter4("");
         } else {
             BigDecimal decimal = new BigDecimal(result);
